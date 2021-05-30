@@ -1,2 +1,2 @@
 # SpringSecurityLearn
-A demo of SpringSecurity
+Demo project for SpringSecurity
