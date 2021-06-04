@@ -1,0 +1,31 @@
+spring:
+  profiles:
+    active:
+      - dev
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+#    url: jdbc:mysql://localhost:3306/springsecuritylearn?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: localhost
+    port: 6379
+    password: 123456
+    database: 0
+  application:
+    name: springsecuritylearn
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true # 驼峰命名规则
+
+logging:
+  level:
+    com:
+      lixin:
+        springsecuritylearn:
+          dao: debug
