@@ -28,6 +28,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return findUser(username);
     }
 
+    /**
+     * 在内存中静态查找用户
+     * @param username 用户名
+     * @return 用户
+     */
     private UserDetails findUser(String username) {
         HashMap<String, User> map = new HashMap<>(16);
         String password = passwordEncoder.encode("123456");

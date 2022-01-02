@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 
 /**
+ * 基本安全配置
+ *
  * @author lx
  * @date 2021/6/3
  */
