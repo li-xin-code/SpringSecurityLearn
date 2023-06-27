@@ -16,12 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SystemController {
 
-    private final TokenService tokenService;
-
-    public SystemController(@Qualifier("redisTokenService") TokenService tokenService) {
-        this.tokenService = tokenService;
-    }
-
     @GetMapping("/test")
     public String t() {
         return "ok";

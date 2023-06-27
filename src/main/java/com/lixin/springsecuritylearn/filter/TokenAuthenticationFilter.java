@@ -44,11 +44,13 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         String token = request.getHeader("token");
         if (token == null) {
             filterChain.doFilter(request, response);
+            return;
         }
 
         String username = tokenService.searchUsernameByToken(token);
         if (username == null) {
             filterChain.doFilter(request, response);
+            return;
         }
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -56,6 +58,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         if (userDetails == null) {
             System.out.println("无效令牌");
             filterChain.doFilter(request, response);
+            return;
         }
 
         PasswordAuthenticationToken authenticationToken =

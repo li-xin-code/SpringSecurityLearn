@@ -13,10 +13,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 用户名&密码登录成功处理器
@@ -42,7 +39,7 @@ public class PasswordAuthenticationSuccessHandler extends SavedRequestAwareAuthe
         String username = authentication.getName();
         String token = UUID.randomUUID().toString().replaceAll("-", "");
 
-        tokenService.saveToken(token, username);
+        Objects.requireNonNull(tokenService.saveToken(token, username));
 
         final String rolePrefix = "ROLE_";
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();

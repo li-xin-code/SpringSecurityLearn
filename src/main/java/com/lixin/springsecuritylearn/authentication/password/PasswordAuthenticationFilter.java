@@ -59,7 +59,7 @@ public class PasswordAuthenticationFilter extends AbstractAuthenticationProcessi
         PasswordAuthenticationToken authRequest = new PasswordAuthenticationToken(username, password);
 
         setDetails(httpServletRequest, authRequest);
-        return this.getAuthenticationManager().authenticate(authRequest);
+        return super.getAuthenticationManager().authenticate(authRequest);
     }
 
     private void setDetails(HttpServletRequest request,
