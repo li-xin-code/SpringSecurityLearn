@@ -13,6 +13,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Spring Cache Redis Config
@@ -27,13 +28,13 @@ public class CacheConfig {
     @Bean
     public RedisCacheManager cacheManager(RedisConnectionFactory factory) {
         return RedisCacheManager.builder(factory)
-                .cacheDefaults(defaultCacheConfig(60))
+                .cacheDefaults(defaultCacheConfig(TimeUnit.DAYS.toSeconds(1L)))
                 .withInitialCacheConfigurations(initCacheConfigMap())
                 .transactionAware()
                 .build();
     }
 
-    private RedisCacheConfiguration defaultCacheConfig(Integer second) {
+    private RedisCacheConfiguration defaultCacheConfig(long second) {
         StringRedisSerializer serializer = new StringRedisSerializer();
         return RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofSeconds(second))

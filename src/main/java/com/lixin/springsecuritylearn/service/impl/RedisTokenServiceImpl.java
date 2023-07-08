@@ -1,10 +1,15 @@
 package com.lixin.springsecuritylearn.service.impl;
 
 import com.lixin.springsecuritylearn.service.TokenService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * Redis存储token

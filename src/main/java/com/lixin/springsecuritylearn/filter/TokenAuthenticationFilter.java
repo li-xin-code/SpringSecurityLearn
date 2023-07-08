@@ -2,12 +2,12 @@ package com.lixin.springsecuritylearn.filter;
 
 import com.lixin.springsecuritylearn.authentication.password.PasswordAuthenticationToken;
 import com.lixin.springsecuritylearn.service.TokenService;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -38,8 +38,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
-                                    @NotNull HttpServletResponse response,
-                                    @NotNull FilterChain filterChain)
+                                    HttpServletResponse response,
+                                    FilterChain filterChain)
             throws ServletException, IOException {
         String token = request.getHeader("token");
         if (token == null) {
@@ -48,7 +48,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String username = tokenService.searchUsernameByToken(token);
-        if (username == null) {
+        if (!StringUtils.hasText(username)) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -62,7 +62,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         }
 
         PasswordAuthenticationToken authenticationToken =
-                new PasswordAuthenticationToken(username, "", userDetails.getAuthorities());
+                new PasswordAuthenticationToken(username, userDetails.getPassword(), userDetails.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
