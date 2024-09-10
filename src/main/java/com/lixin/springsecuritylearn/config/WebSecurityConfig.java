@@ -33,7 +33,6 @@ public class WebSecurityConfig {
     private final MyAccessDeniedHandler myAccessDeniedHandler;
     private final MyAuthenticationEntryPoint myAuthenticationEntryPoint;
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((requestMatcherRegistry) ->
@@ -42,9 +41,8 @@ public class WebSecurityConfig {
                 .cors()
                 .and()
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(exceptionHandlingConfigurer ->
-                        exceptionHandlingConfigurer
+                .addFilterAfter(authenticationFilter, TokenAuthenticationFilter.class)
+                .exceptionHandling(exceptionHandlingConfigurer -> exceptionHandlingConfigurer
                                 .accessDeniedHandler(myAccessDeniedHandler)
                                 .authenticationEntryPoint(myAuthenticationEntryPoint));
         return http.build();
@@ -60,6 +58,5 @@ public class WebSecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
 
 }

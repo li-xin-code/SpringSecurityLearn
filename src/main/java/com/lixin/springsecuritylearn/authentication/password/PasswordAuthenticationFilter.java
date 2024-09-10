@@ -74,24 +74,14 @@ public class PasswordAuthenticationFilter extends AbstractAuthenticationProcessi
      * @return UsernamePasswordLoginForm 登录表单
      */
     private UsernamePasswordLoginForm obtainForm(HttpServletRequest request) {
-        BufferedReader reader = null;
         StringBuilder stringBuilder = new StringBuilder();
-        try {
-            reader = request.getReader();
+        try(BufferedReader reader  = request.getReader()) {
             String oneLine;
             while ((oneLine = reader.readLine()) != null) {
                 stringBuilder.append(oneLine);
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         String context = stringBuilder.toString();
         return JSON.parseObject(context, UsernamePasswordLoginForm.class);
